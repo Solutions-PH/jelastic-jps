@@ -2,9 +2,9 @@ contact_email: sss@7.fr
 
 defaults:
   distinguished_name:
-      country: FR
-      locality: Paris
-      organization_name: 7 Medical
+    country: FR
+    locality: Paris
+    organization_name: 7 Medical
   solver: http
 
 certificates:
