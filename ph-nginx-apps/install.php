@@ -32,8 +32,7 @@ if(isset($sessionAdmin['session']))
 			'session' => $sessionAdmin['session']
 		]
 	);
-	
-	print_r($env);
+		
 	if($env["result"]==11) {
 
 		echo "Instance creation "."\n";
@@ -41,7 +40,7 @@ if(isset($sessionAdmin['session']))
 		$paramsRegAccount = array(
 			'appid' => $jelastic->JcaAppId,
 			'session' => $sessionAdmin['session'],
-			'jps' => 'https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/nginx/manifest.jps',
+			'jps' => 'https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/manifest.jps',
 			'envName' => $envName,
 			'displayName' => $displayName,
 			'region' => 'thor'
@@ -49,22 +48,12 @@ if(isset($sessionAdmin['session']))
 		
 		$createInstance = $jelastic->marketPlaceJpsInstall($paramsRegAccount);
 		
-		print_r($createInstance);
-		
-		$f = fopen("./instance.json", "w");
-		fwrite($f, json_encode($createInstance));
-		fclose($f);
-		
 		$appid = $createInstance->appid;
 	
 	} else {
-		
-		$appid = "";
-		
+		$appid = $env["env"]["appid"];		
 	}
-		
-	$createInstance = json_decode(file_get_contents("./instance.json"));
-	
+				
 	echo "AppId = ".$appid."\n";
 	/*
 	$repos = $jelastic->getRepos([
@@ -80,7 +69,10 @@ if(isset($sessionAdmin['session']))
 	echo "Repository detected = ".count($myRepos)."\n";
 	*/
 	
+	echo "Execute commands"."\n";
+
 	$commands = [
+		/*
 		[
 			"command" => "rm -f /etc/nginx/conf.d/nossl.conf && rm -f /etc/nginx/conf.d/ssl.conf && rm -f /etc/nginx/conf.d/virtual.conf && echo 'include /etc/nginx/conf.d/sites-enabled/*.*;' > /etc/nginx/conf.d/sites.conf",
 			"params" => ""
@@ -124,6 +116,10 @@ if(isset($sessionAdmin['session']))
 				echo 'extension=imagick.so' >> /etc/php.ini;
 			fi",
 			"params" => ""
+		],*/
+		[
+			"command" => "cd /var/www/webroot && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/1.0.1/acmephp.phar', 'acmephp.phar');\" && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/1.0.1/acmephp.phar.pubkey', 'acmephp.phar.pubkey');\" && php acmephp.phar --version",
+			"params" => ""
 		]
 	];
 		
@@ -133,7 +129,7 @@ if(isset($sessionAdmin['session']))
 		"nodeGroup" => "cp",
 		"commandList" => json_encode($commands),
 	]);
-	
+	exit;
 	$sites = yaml_parse(file_get_contents('./sites.yaml'));
 
 	foreach($sites as $site) {
