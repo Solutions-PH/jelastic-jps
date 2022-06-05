@@ -39,8 +39,9 @@ actions:
       user: root
 
       cd ${globals.root};	
-      wget ${baseUrl}/scripts/newdb-project.sh -O newdb-project.sh;
-      chmod +x newdb-project.sh;
+      wget ${baseUrl}/scripts/install.sh -O install.sh;
+      chmod +x install.sh;
+      sh install.sh
 
 startPage: /
 

@@ -1,0 +1,17 @@
+- site: appze.ph.fr
+  domain: app.fr.fr
+  repo: 
+    name: 'solutions-ph-rest-api'
+    url: 'https://github.com/Solutions-PH/rest-api'
+    branch: 'main'
+
+- site: app.ph.fr
+  domain: app.fr.fr
+  repo: 
+    name: 'solutions-ph-web-app'
+    url: 'https://github.com/Solutions-PH/web-app'
+    branch: 'main' 
+  
+- site: looksante.fr
+  domain: www.looksante.fr
+  
