@@ -62,7 +62,7 @@ if(isset($sessionAdmin['session']))
 			
 			echo "Nginx configuration"."\n";
 			
-			$command = "mkdir -p /var/www/webroot/".$site["path"]." && cd /var/www/webroot/".$site["path"]." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/nginx/template.conf', '".$site["domain"].".conf');\" && cd /etc/nginx/conf.d/sites-enabled-ssl/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/nginx/template.ssl.conf', '".$site["domain"].".conf');\"";
+			$command = "mkdir -p /var/www/webroot/".$site["path"]." && cd /var/www/webroot/".$site["path"]." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/nginx/template.conf', '".$site["domain"].".conf');\" && mkdir -p /etc/nginx/conf.d/sites-enabled-ssl && cd /etc/nginx/conf.d/sites-enabled-ssl/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/nginx/template.ssl.conf', '".$site["domain"].".conf');\"";
 			
 			echo $command;
 			
