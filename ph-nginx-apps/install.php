@@ -116,14 +116,14 @@ if(isset($sessionAdmin['session']))
 				echo 'extension=imagick.so' >> /etc/php.ini;
 			fi",
 			"params" => ""
-		],*/
+		],
 		[
-			"command" => "cd /var/www/webroot && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/1.0.1/acmephp.phar', 'acmephp.phar');\" && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/1.0.1/acmephp.phar.pubkey', 'acmephp.phar.pubkey');\" && php acmephp.phar --version",
+			"command" => "cd /var/www/webroot && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/2.0.0/acmephp.phar', 'acmephp.phar');\" && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/2.0.0/acmephp.phar.pubkey', 'acmephp.phar.pubkey');\" && php acmephp.phar --version",
 			"params" => ""
 		],[
-			"command" => "cd /var/www/webroot && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/config.yaml', 'config.yaml');\" " ,
+			"command" => "cd /var/www/webroot && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/config.yaml', 'config.yaml');\" && php acmephp.phar run config.yaml" ,
 			"params" => ""
-		]
+		]*/
 	];
 		
 	$cmd = $jelastic->execCmd([
@@ -132,12 +132,12 @@ if(isset($sessionAdmin['session']))
 		"nodeGroup" => "cp",
 		"commandList" => json_encode($commands),
 	]);
-	exit;
+
 	$sites = yaml_parse(file_get_contents('./sites.yaml'));
 
 	foreach($sites as $site) {
 
-		echo "Start : ".$site["name"]."\n";
+		echo "Start : ".$site["site"]."\n";
 		/*
 		if(array_key_exists("repo", $site)) {
 			if(!array_key_exists($site["repo"]["name"], $myRepos)) {
@@ -155,8 +155,24 @@ if(isset($sessionAdmin['session']))
 		}
 		*/
 		
-		echo "Deploy: ".$site["name"]."\n";
+		echo "Nginx configuration"."\n";
 		
+		$commands = [
+			[
+				"command" => "mkdir /var/www/webroot/".$site["site"]." && cd /var/www/webroot/".$site["site"]." && cd /etc/nginx/conf.d/sites-enabled/\" && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/nginx/template.conf', '".$site["site"].".conf');\" && cd /etc/nginx/conf.d/sites-enabled-ssl/\" && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/nginx/template.ssl.conf', '".$site["site"].".conf');\"",
+				"params" => ""
+			]
+		];
+		
+		$cmd = $jelastic->execCmd([
+			"envName" => $envName,
+			"session" => $sessionAdmin['session'],
+			"nodeGroup" => "cp",
+			"commandList" => json_encode($commands),
+		]);
+		
+		echo "Deploy: ".$site["site"]."\n";
+		/*
 		$repos = $jelastic->deploy([
 			"envName" => $envName,
 			"session" => $sessionAdmin['session'],
@@ -165,7 +181,7 @@ if(isset($sessionAdmin['session']))
 			"nodeGroup" => "cp",
 			"settings" => '{"autoResolveConflict": "true", "autoUpdate": "true", "autoUpdateInterval": "1"}'
 		]);
-		
+		*/
 		print_R($repos);
 		
 		/*
@@ -183,7 +199,7 @@ if(isset($sessionAdmin['session']))
 			"commandList" => json_encode($commands),
 		]);
 		*/
-		echo "End : ".$site["name"]."\n";
+		echo "End : ".$site["site"]."\n";
 		echo "---------\n";
 
 		exit;
