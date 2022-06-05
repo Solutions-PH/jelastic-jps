@@ -24,8 +24,8 @@ echo "Session = ".$sessionAdmin['session']."\n";
 if(isset($sessionAdmin['session']))
 {
 
-	echo "Instance creation "."\n";
-	
+	echo "Instance check "."\n";
+
 	$env = $jelastic->getEnvInfo(
 		[
 			'envName' => $envName,
@@ -35,6 +35,8 @@ if(isset($sessionAdmin['session']))
 	
 	print_r($env);
 	if($env["result"]==11) {
+
+		echo "Instance creation "."\n";
 			
 		$paramsRegAccount = array(
 			'appid' => $jelastic->JcaAppId,
@@ -46,6 +48,8 @@ if(isset($sessionAdmin['session']))
 		);
 		
 		$createInstance = $jelastic->marketPlaceJpsInstall($paramsRegAccount);
+		
+		print_r($createInstance);
 		
 		$f = fopen("./instance.json", "w");
 		fwrite($f, json_encode($createInstance));
