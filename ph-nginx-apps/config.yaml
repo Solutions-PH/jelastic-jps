@@ -2,16 +2,16 @@ contact_email: sss@7.fr
 
 defaults:
   distinguished_name:
-	  country: FR
-	  locality: Paris
-	  organization_name: 7 Medical
+      country: FR
+      locality: Paris
+      organization_name: 7 Medical
   solver: http
 
 certificates:
   - domain: test.ph.fr
-	distinguished_name:
-	  organization_name: Test PH
-	solver:
-	  name: http-file
-	  adapter: local
-	  root: /var/www/webroot/test-ph-fr
+    distinguished_name:
+      organization_name: Test PH
+    solver:
+      name: http-file
+      adapter: local
+      root: /var/www/webroot/test-ph-fr

@@ -3,7 +3,7 @@ appVersion: latest
 type: install
 id: laravel
 name: Laravel
-baseUrl: https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/nginx
+baseUrl: https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps
 
 logo: /images/logo-transparent.png
 homepage: http://www.laravel.com/

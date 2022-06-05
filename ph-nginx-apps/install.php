@@ -120,6 +120,9 @@ if(isset($sessionAdmin['session']))
 		[
 			"command" => "cd /var/www/webroot && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/1.0.1/acmephp.phar', 'acmephp.phar');\" && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/1.0.1/acmephp.phar.pubkey', 'acmephp.phar.pubkey');\" && php acmephp.phar --version",
 			"params" => ""
+		],[
+			"command" => "cd /var/www/webroot && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/config.yaml', 'config.yaml');\" && php acmephp.phar run config.yaml" ,
+			"params" => ""
 		]
 	];
 		
