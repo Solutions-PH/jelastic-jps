@@ -41,6 +41,7 @@ actions:
       cd ${globals.root};	
       wget ${baseUrl}/scripts/install.sh -O install.sh;
       chmod +x install.sh;
+      sh install.sh
 
 startPage: /
 
