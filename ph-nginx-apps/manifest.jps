@@ -26,22 +26,26 @@ nodes:
   extip: true
 
 onInstall:
-  - config
+  - serverConfig
+  - phpConfig
   - restartNodes:
     - nodeGroup: [cp]
 
 actions:
-  config:
+  serverConfig:
+    cmd[vds]: |-
+      sudo yum -y install https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm
+      sudo yum-config-manager --enable remi
+      sudo yum -y install ImageMagick7-heic
+
+    user: root
+
+  phpConfig:
     cmd[cp]: |-
       curl -sS https://getcomposer.org/installer | php
       mv composer.phar /usr/bin/composer
       chmod +x /usr/bin/composer
-      user: root
-
-      cd ${globals.root};	
-      wget ${baseUrl}/scripts/install.sh -O install.sh;
-      chmod +x install.sh;
-      sh install.sh
+    user: root
 
 startPage: /
 

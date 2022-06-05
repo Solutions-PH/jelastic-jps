@@ -9,9 +9,18 @@ defaults:
 
 certificates:
   - domain: test.ph.fr
+    path: test-ph-fr
     distinguished_name:
       organization_name: Test PH
     solver:
       name: http-file
       adapter: local
       root: /var/www/webroot/test-ph-fr
+  - domain: test2.ph.fr
+    path: test2-ph-fr
+    distinguished_name:
+      organization_name: Test PH
+    solver:
+      name: http-file
+      adapter: local
+      root: /var/www/webroot/test2-ph-fr

@@ -1,5 +1,5 @@
 - site: app-ph-fr
-  domain: app.fr.fr
+  domain: app.ph.fr
   repo: 
     name: 'solutions-ph-rest-api'
     url: 'https://github.com/Solutions-PH/rest-api'
