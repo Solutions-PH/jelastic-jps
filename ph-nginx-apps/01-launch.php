@@ -60,7 +60,7 @@ if(isset($sessionAdmin['session']))
 
 	$commands = [
 		[
-			"command" => "rm -f /etc/nginx/conf.d/sites-enabled/default.conf && rm -f /etc/nginx/conf.d/nossl.conf && rm -f /etc/nginx/conf.d/ssl.conf && rm -f /etc/nginx/conf.d/virtual.conf && echo 'include /etc/nginx/conf.d/sites-enabled/*.*;' > /etc/nginx/conf.d/sites.conf",
+			"command" => "rm -f /etc/nginx/conf.d/sites-enabled/default.conf && rm -f /etc/nginx/conf.d/nossl.conf && rm -f /etc/nginx/conf.d/ssl.conf && rm -f /etc/nginx/conf.d/virtual.conf && echo 'include /etc/nginx/conf.d/sites-enabled/*.*;' > /etc/nginx/conf.d/sites.conf && mkdir -p /etc/nginx/conf.d/sites-enabled-ssl/ ",
 			"params" => ""
 		],[
 			"command" => "if grep -Fxq 'extension=intl.so' /etc/php.ini
@@ -118,6 +118,57 @@ if(isset($sessionAdmin['session']))
 		"nodeGroup" => "cp",
 		"commandList" => json_encode($commands),
 	]);
+	
+	$sites = yaml_parse(file_get_contents('./config.yaml'));
+	
+	echo "Domain configuration"."\n";
+	
+	foreach($sites["certificates"] as $site) {
+	
+		echo "Start : ".$site["domain"]."\n";		
+		
+		echo "Nginx configuration"."\n";
+		
+		$command = "mkdir -p /var/www/webroot/".$site["path"]." && cd /var/www/webroot/".$site["path"]." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/nginx/template.conf', '".$site["domain"].".conf');\"";
+				
+		$commands = [
+			[
+				"command" => $command,
+				"params" => ""
+			],[
+				"command" => "sed -i 's/#server_name#/".$site["domain"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
+				"params" => ""
+			],[
+				"command" => "sed -i 's/#server_alt_name#/".$site["alt_domain"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["alt_domain"].".conf",
+				"params" => ""
+			],[
+				"command" => "sed -i 's/#server_path#/".$site["path"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
+				"params" => ""
+			]
+		];
+		
+		$cmd = $jelastic->execCmd([
+			"envName" => $envName,
+			"session" => $sessionAdmin['session'],
+			"nodeGroup" => "cp",
+			"commandList" => json_encode($commands),
+		]);
+		
+		echo "Deploy: ".$site["domain"]."\n";
+		
+		$repos = $jelastic->deploy([
+			"envName" => $envName,
+			"session" => $sessionAdmin['session'],
+			"repo" => '{"url":"'.$site["repo"].'", "branch":"main","keyId":506}',
+			"context" => $site["path"],
+			"nodeGroup" => "cp",
+			"settings" => '{"autoResolveConflict": "true", "autoUpdate": "true", "autoUpdateInterval": "1"}'
+		]);
+				
+		echo "End : ".$site["domain"]."\n";
+		echo "---------\n";
+		
+	}
 
 }
 

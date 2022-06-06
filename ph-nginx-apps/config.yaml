@@ -9,7 +9,9 @@ defaults:
 
 certificates:
   - domain: test.ph.fr
+    alt_domain: 
     path: test-ph-fr
+    repo: 'https://github.com/Solutions-PH/rest-api'
     distinguished_name:
       organization_name: Test PH
     solver:
@@ -17,7 +19,9 @@ certificates:
       adapter: local
       root: /var/www/webroot/test-ph-fr
   - domain: test2.ph.fr
+    alt_domain: 
     path: test2-ph-fr
+    repo: 'https://github.com/Solutions-PH/web-app'
     distinguished_name:
       organization_name: Test PH
     solver:
