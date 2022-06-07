@@ -40,7 +40,7 @@ if(isset($sessionAdmin['session']))
 		$paramsRegAccount = array(
 			'appid' => $jelastic->JcaAppId,
 			'session' => $sessionAdmin['session'],
-			'jps' => 'https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/manifest.jps',
+			'jps' => 'https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ospharea-nginx-api/manifest.jps',
 			'envName' => $envName,
 			'displayName' => $displayName,
 			'region' => 'thor'
@@ -136,7 +136,7 @@ if(isset($sessionAdmin['session']))
 		
 		echo "Nginx configuration"."\n";
 		
-		$command = "mkdir -p /var/www/webroot/".$site["distinguished_name"]["organization_unit_name"]." && cd /var/www/webroot/".$site["distinguished_name"]["organization_unit_name"]." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/nginx/template.conf', '".$site["domain"].".conf');\"";
+		$command = "mkdir -p ".$site["solver"]["root"]." && cd ".$site["solver"]["root"]." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/nginx/template.conf', '".$site["domain"].".conf');\"";
 				
 		$commands = [
 			[
@@ -146,7 +146,7 @@ if(isset($sessionAdmin['session']))
 				"command" => "sed -i 's/#server_name#/".$site["domain"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
 				"params" => ""
 			],[
-				"command" => "sed -i 's/#server_path#/".$site["distinguished_name"]["organization_unit_name"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
+				"command" => "sed -i 's/#server_path#/".$site["solver"]["root"]."\/public/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
 				"params" => ""
 			]
 		];
@@ -172,13 +172,14 @@ if(isset($sessionAdmin['session']))
 		
 		echo "Deploy: ".$site["domain"]."\n";
 		
+		$path = str_replace("/var/www/webroot", "", $site["solver"]["root"]);
 		if(!array_key_exists($site["distinguished_name"]["organization_unit_name"], $contexts)) {
 		
 			$repos = $jelastic->deploy([
 				"envName" => $envName,
 				"session" => $sessionAdmin['session'],
 				"repo" => '{"url":"'.$site["distinguished_name"]["locality"].'", "branch":"main","keyId":506}',
-				"context" => $site["distinguished_name"]["organization_unit_name"],
+				"context" => $path,
 				"nodeGroup" => "cp",
 				"settings" => '{"autoResolveConflict": "true", "autoUpdate": "true", "autoUpdateInterval": "1"}'
 			]);

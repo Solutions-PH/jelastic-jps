@@ -4,5 +4,5 @@
  ini_set('display_startup_errors', 1); 
  error_reporting(E_ALL);
  
-$envName = "test-nginx";
-$displayName = "displayName";
+$envName = "ospharea-nginx-api";
+$displayName = "ospharea-nginx-api";

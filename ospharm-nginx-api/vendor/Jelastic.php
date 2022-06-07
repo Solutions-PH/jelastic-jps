@@ -26,7 +26,7 @@ class Jelastic
     public function __construct()
     {
         $this->apiUrl = 'https://app.rag-control.hosteur.com/1.0/';
-        $this->apiUsername = 'edouard@7.fr';
+        $this->apiUsername = 'edaubin@ospharea.com';
         $this->apiPassword = 'Jb220754!!**';
         $this->signUpAppId = 'xxxxxxxxxxxxxxxxxxxxx';
         $this->JcaAppId = 'dashboard';
