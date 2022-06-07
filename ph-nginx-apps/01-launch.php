@@ -129,7 +129,7 @@ if(isset($sessionAdmin['session']))
 		
 		echo "Nginx configuration"."\n";
 		
-		$command = "mkdir -p /var/www/webroot/".$site["path"]." && cd /var/www/webroot/".$site["path"]." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/nginx/template.conf', '".$site["domain"].".conf');\"";
+		$command = "mkdir -p /var/www/webroot/".$site["distinguished_name"]["organization_unit_name"]." && cd /var/www/webroot/".$site["distinguished_name"]["organization_unit_name"]." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/nginx/template.conf', '".$site["domain"].".conf');\"";
 				
 		$commands = [
 			[
@@ -142,7 +142,7 @@ if(isset($sessionAdmin['session']))
 				"command" => "sed -i 's/#server_alt_name#/".$site["subject_alternative_names"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
 				"params" => ""
 			],[
-				"command" => "sed -i 's/#server_path#/".$site["path"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
+				"command" => "sed -i 's/#server_path#/".$site["distinguished_name"]["organization_unit_name"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
 				"params" => ""
 			]
 		];
@@ -160,7 +160,7 @@ if(isset($sessionAdmin['session']))
 			"envName" => $envName,
 			"session" => $sessionAdmin['session'],
 			"repo" => '{"url":"'.$site["repo"].'", "branch":"main","keyId":506}',
-			"context" => $site["path"],
+			"context" => $site["distinguished_name"]["organization_unit_name",
 			"nodeGroup" => "cp",
 			"settings" => '{"autoResolveConflict": "true", "autoUpdate": "true", "autoUpdateInterval": "1"}'
 		]);

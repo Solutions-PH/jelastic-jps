@@ -12,7 +12,7 @@ certificates:
     subject_alternative_names: 
     distinguished_name:
       organization_name: Test PH
-      path: test-ph-fr
+      organization_unit_name: test-ph-fr
       repo: 'https://github.com/Solutions-PH/rest-api'
     solver:
       name: http-file
@@ -22,7 +22,7 @@ certificates:
     subject_alternative_names: 
     distinguished_name:
       organization_name: Test PH
-      path: test2-ph-fr
+      organization_unit_name: test2-ph-fr
       repo: 'https://github.com/Solutions-PH/web-app'
     solver:
       name: http-file
