@@ -40,7 +40,7 @@ if(isset($sessionAdmin['session']))
 		$paramsRegAccount = array(
 			'appid' => $jelastic->JcaAppId,
 			'session' => $sessionAdmin['session'],
-			'jps' => 'https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ospharea-nginx-api/manifest.jps',
+			'jps' => 'https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/'.$envName.'/manifest.jps',
 			'envName' => $envName,
 			'displayName' => $displayName,
 			'region' => 'thor'
