@@ -13,7 +13,7 @@ certificates:
     distinguished_name:
       organization_name: Test PH
       organization_unit_name: test-ph-fr
-      repo: 'https://github.com/Solutions-PH/rest-api'
+      locality: 'https://github.com/Solutions-PH/rest-api'
     solver:
       name: http-file
       adapter: local
@@ -23,7 +23,7 @@ certificates:
     distinguished_name:
       organization_name: Test PH
       organization_unit_name: test2-ph-fr
-      repo: 'https://github.com/Solutions-PH/web-app'
+      locality: 'https://github.com/Solutions-PH/web-app'
     solver:
       name: http-file
       adapter: local

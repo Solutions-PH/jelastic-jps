@@ -159,7 +159,7 @@ if(isset($sessionAdmin['session']))
 		$repos = $jelastic->deploy([
 			"envName" => $envName,
 			"session" => $sessionAdmin['session'],
-			"repo" => '{"url":"'.$site["repo"].'", "branch":"main","keyId":506}',
+			"repo" => '{"url":"'.$site["locality"].'", "branch":"main","keyId":506}',
 			"context" => $site["distinguished_name"]["organization_unit_name",
 			"nodeGroup" => "cp",
 			"settings" => '{"autoResolveConflict": "true", "autoUpdate": "true", "autoUpdateInterval": "1"}'
