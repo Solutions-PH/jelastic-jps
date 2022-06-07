@@ -139,13 +139,17 @@ if(isset($sessionAdmin['session']))
 				"command" => "sed -i 's/#server_name#/".$site["domain"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
 				"params" => ""
 			],[
-				"command" => "sed -i 's/#server_alt_name#/".$site["subject_alternative_names"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
-				"params" => ""
-			],[
 				"command" => "sed -i 's/#server_path#/".$site["distinguished_name"]["organization_unit_name"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
 				"params" => ""
 			]
 		];
+		
+		if(array_key_exists("subject_alternative_names", $site)) {
+			$commands[] = [
+				"command" => "sed -i 's/#server_alt_name#/".$site["subject_alternative_names"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
+				"params" => ""
+			];
+		} 
 		
 		$cmd = $jelastic->execCmd([
 			"envName" => $envName,

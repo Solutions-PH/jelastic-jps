@@ -9,7 +9,6 @@ defaults:
 
 certificates:
   - domain: test.ph.fr
-    subject_alternative_names: 
     distinguished_name:
       organization_name: Test PH
       organization_unit_name: test-ph-fr
@@ -19,7 +18,6 @@ certificates:
       adapter: local
       root: /var/www/webroot/test-ph-fr
   - domain: test2.ph.fr
-    subject_alternative_names: 
     distinguished_name:
       organization_name: Test PH
       organization_unit_name: test2-ph-fr
