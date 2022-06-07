@@ -137,7 +137,9 @@ if(isset($sessionAdmin['session']))
 		echo "Nginx configuration"."\n";
 		
 		$command = "mkdir -p ".$site["solver"]["root"]." && cd ".$site["solver"]["root"]." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/nginx/template.conf', '".$site["domain"].".conf');\"";
-				
+		
+		$path = str_replace("/var/www/webroot/", "", $site["solver"]["root"]);
+
 		$commands = [
 			[
 				"command" => $command,
@@ -146,7 +148,7 @@ if(isset($sessionAdmin['session']))
 				"command" => "sed -i 's/#server_name#/".$site["domain"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
 				"params" => ""
 			],[
-				"command" => "sed -i 's/#server_path#/".$site["solver"]["root"]."\/public/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
+				"command" => "sed -i 's/#server_path#/".$path."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
 				"params" => ""
 			]
 		];
@@ -169,16 +171,13 @@ if(isset($sessionAdmin['session']))
 			"nodeGroup" => "cp",
 			"commandList" => json_encode($commands),
 		]);
-		
-		echo "Deploy: ".$site["domain"]."\n";
-		
-		$path = str_replace("/var/www/webroot", "", $site["solver"]["root"]);
-		if(!array_key_exists($site["distinguished_name"]["organization_unit_name"], $contexts)) {
+
+		if(!array_key_exists($path, $contexts)) {
 		
 			$repos = $jelastic->deploy([
 				"envName" => $envName,
 				"session" => $sessionAdmin['session'],
-				"repo" => '{"url":"'.$site["distinguished_name"]["locality"].'", "branch":"main","keyId":506}',
+				"repo" => '{"url":"'.$site["distinguished_name"]["locality"].'", "branch":"main","keyId":'.$keyId.'}',
 				"context" => $path,
 				"nodeGroup" => "cp",
 				"settings" => '{"autoResolveConflict": "true", "autoUpdate": "true", "autoUpdateInterval": "1"}'
@@ -210,7 +209,8 @@ if(isset($sessionAdmin['session']))
 					
 	}
 	
-	echo "Ready : http://".$env["domain"];
+	echo "Ready : http://".$env["env"]["domain"]."\n";
+	echo "IP : ".$env["nodes"][0]["extIPs"][0]."\n";
 	
 }
 

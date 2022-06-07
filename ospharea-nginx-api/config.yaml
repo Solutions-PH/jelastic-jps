@@ -11,16 +11,16 @@ certificates:
   - domain: ocean.ospharm.org
     distinguished_name:
       organization_name: Ospharm Ocean
-      locality: 'https://github.com/ospharea/api-keabot.git'
+      locality: 'github.com:ospharea/api-keabot.git'
     solver:
       name: http-file
       adapter: local
-      root: /var/www/webroot/ocean-ospharm-fr
+      root: /var/www/webroot/ocean-ospharm-org
   - domain: terre.ospharm.org
     distinguished_name:
       organization_name: Ospharm Terre
-      locality: 'https://github.com/ospharea/api-informax.git'
+      locality: 'github.com:ospharea/api-informax.git'
     solver:
       name: http-file
       adapter: local
-      root: /var/www/webroot/terre-ospharm-fr
+      root: /var/www/webroot/terre-ospharm-org
