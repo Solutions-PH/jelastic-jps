@@ -51,6 +51,8 @@ if(isset($sessionAdmin['session']))
 			$command = "cd /etc/nginx/conf.d/sites-enabled-ssl && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/".$envName."/nginx/template.ssl.conf', '".$site["domain"].".conf');\"";
 			
 			$path = str_replace("/var/www/webroot/", "", $site["solver"]["root"])."/public";
+			
+			$path = str_replace("/", "\/", $path);
 
 			$commands = [
 				[
@@ -83,6 +85,8 @@ if(isset($sessionAdmin['session']))
 				"nodeGroup" => "cp",
 				"commandList" => json_encode($commands),
 			]);
+			
+			print_r($cmd);
 	
 			echo "End : ".$site["domain"]."\n";
 			echo "---------\n";

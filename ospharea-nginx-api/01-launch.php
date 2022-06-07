@@ -48,9 +48,6 @@ if(isset($sessionAdmin['session']))
 		
 		$createInstance = $jelastic->marketPlaceJpsInstall($paramsRegAccount);
 		
-		print_r($createInstance);
-		exit;
-		
 		$appid = $createInstance["appid"];
 	
 		$env = $jelastic->getEnvInfo(
@@ -117,6 +114,14 @@ if(isset($sessionAdmin['session']))
 				echo 'extension=imagick.so' >> /etc/php.ini;
 			fi",
 			"params" => ""
+		],[
+			"command" => "if grep -Fxq 'extension=phalcon.so' /etc/php.ini
+			then
+				echo 'ok';
+			else
+				echo 'extension=phalcon.so' >> /etc/php.ini;
+			fi",
+			"params" => ""
 		]
 	];
 		
@@ -139,9 +144,10 @@ if(isset($sessionAdmin['session']))
 		
 		echo "Nginx configuration"."\n";
 		
-		$command = "mkdir -p ".$site["solver"]["root"]." && cd ".$site["solver"]["root"]." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/nginx/template.conf', '".$site["domain"].".conf');\"";
+		$command = "mkdir -p ".$site["solver"]["root"]." && cd ".$site["solver"]["root"]." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/'.$envName.'/nginx/template.conf', '".$site["domain"].".conf');\"";
 		
-		$path = str_replace("/var/www/webroot/", "", $site["solver"]["root"]);
+		$path = str_replace("/var/www/webroot/", "", $site["solver"]["root"])."/public";
+		$path = str_replace("/", "\/", $path);
 
 		$commands = [
 			[
