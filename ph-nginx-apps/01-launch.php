@@ -139,7 +139,7 @@ if(isset($sessionAdmin['session']))
 				"command" => "sed -i 's/#server_name#/".$site["domain"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
 				"params" => ""
 			],[
-				"command" => "sed -i 's/#server_alt_name#/".$site["alt_domain"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["alt_domain"].".conf",
+				"command" => "sed -i 's/#server_alt_name#/".$site["subject_alternative_names"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
 				"params" => ""
 			],[
 				"command" => "sed -i 's/#server_path#/".$site["path"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",

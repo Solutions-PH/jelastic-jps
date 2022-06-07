@@ -58,7 +58,7 @@ if(isset($sessionAdmin['session']))
 					"command" => "sed -i 's/#server_name#/".$site["domain"]."/g' /etc/nginx/conf.d/sites-enabled-ssl/".$site["domain"].".conf",
 					"params" => ""
 				],[
-					"command" => "sed -i 's/#server_alt_name#/".$site["domain"]."/g' /etc/nginx/conf.d/sites-enabled-ssl/".$site["domain"].".conf",
+					"command" => "sed -i 's/#server_alt_name#/".$site["distinguished_name"]."/g' /etc/nginx/conf.d/sites-enabled-ssl/".$site["domain"].".conf",
 					"params" => ""
 				],[
 					"command" => "sed -i 's/#server_path#/".$site["path"]."/g' /etc/nginx/conf.d/sites-enabled-ssl/".$site["domain"].".conf",

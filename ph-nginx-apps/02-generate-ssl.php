@@ -37,7 +37,7 @@ if(isset($sessionAdmin['session']))
 		$appid = $env["env"]["appid"];		
 					
 		
-		$command = "cd /var/www/webroot && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/config.yaml', 'config.yaml');\"";
+		$command = "cd /var/www/webroot && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/config.yaml', 'config.yaml');\" && php acmephp.phar run config.yaml";
 				
 		$commands = [
 			[
@@ -53,6 +53,7 @@ if(isset($sessionAdmin['session']))
 			"commandList" => json_encode($commands),
 		]);
 		
+		print_r($cmd);
 
 	}
 }
