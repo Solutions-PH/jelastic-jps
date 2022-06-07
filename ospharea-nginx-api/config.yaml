@@ -15,7 +15,7 @@ certificates:
     solver:
       name: http-file
       adapter: local
-      root: /var/www/webroot/ocean-ospharm-org
+      root: /var/www/webroot/ocean-ospharm-org/public
   - domain: terre.ospharm.org
     distinguished_name:
       organization_name: Ospharm Terre
@@ -23,4 +23,4 @@ certificates:
     solver:
       name: http-file
       adapter: local
-      root: /var/www/webroot/terre-ospharm-org
+      root: /var/www/webroot/terre-ospharm-org/public

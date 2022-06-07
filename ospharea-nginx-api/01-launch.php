@@ -115,6 +115,14 @@ if(isset($sessionAdmin['session']))
 			fi",
 			"params" => ""
 		],[
+			"command" => "if grep -Fxq 'extension=psr.so' /etc/php.ini
+			then
+				echo 'ok';
+			else
+				echo 'extension=psr.so' >> /etc/php.ini;
+			fi",
+			"params" => ""
+		],[
 			"command" => "if grep -Fxq 'extension=phalcon.so' /etc/php.ini
 			then
 				echo 'ok';
@@ -144,10 +152,12 @@ if(isset($sessionAdmin['session']))
 		
 		echo "Nginx configuration"."\n";
 		
-		$command = "mkdir -p ".$site["solver"]["root"]." && cd ".$site["solver"]["root"]." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/'.$envName.'/nginx/template.conf', '".$site["domain"].".conf');\"";
+		$path = str_replace("/var/www/webroot/", "", $site["solver"]["root"]);
+		$path = str_replace("/public", "", $path);
 		
-		$path = str_replace("/var/www/webroot/", "", $site["solver"]["root"])."/public";
-		$path = str_replace("/", "\/", $path);
+		$command = "mkdir -p ".$path." && cd ".$path." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/'.$envName.'/nginx/template.conf', '".$site["domain"].".conf');\"";
+		
+		$publicPath = str_replace("/", "\/", $path."/public");
 
 		$commands = [
 			[
@@ -157,7 +167,7 @@ if(isset($sessionAdmin['session']))
 				"command" => "sed -i 's/#server_name#/".$site["domain"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
 				"params" => ""
 			],[
-				"command" => "sed -i 's/#server_path#/".$path."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
+				"command" => "sed -i 's/#server_path#/".$publicPath."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
 				"params" => ""
 			]
 		];
@@ -182,7 +192,7 @@ if(isset($sessionAdmin['session']))
 		]);
 
 		if(!array_key_exists($path, $contexts)) {
-		
+		echo $path;
 			$repos = $jelastic->deploy([
 				"envName" => $envName,
 				"session" => $sessionAdmin['session'],
