@@ -48,8 +48,10 @@ if(isset($sessionAdmin['session']))
 			
 			echo "Nginx configuration"."\n";
 			
-			$command = "cd /etc/nginx/conf.d/sites-enabled-ssl && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/nginx/template.ssl.conf', '".$site["domain"].".conf');\"";
-					
+			$command = "cd /etc/nginx/conf.d/sites-enabled-ssl && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/".$envName."/nginx/template.ssl.conf', '".$site["domain"].".conf');\"";
+			
+			$path = str_replace("/var/www/webroot/", "", $site["solver"]["root"])."/public";
+
 			$commands = [
 				[
 					"command" => $command,
@@ -58,7 +60,7 @@ if(isset($sessionAdmin['session']))
 					"command" => "sed -i 's/#server_name#/".$site["domain"]."/g' /etc/nginx/conf.d/sites-enabled-ssl/".$site["domain"].".conf",
 					"params" => ""
 				],[
-					"command" => "sed -i 's/#server_path#/".$site["distinguished_name"]["organization_unit_name"]."/g' /etc/nginx/conf.d/sites-enabled-ssl/".$site["domain"].".conf",
+					"command" => "sed -i 's/#server_path#/".$path."/g' /etc/nginx/conf.d/sites-enabled-ssl/".$site["domain"].".conf",
 					"params" => ""
 				]
 			];

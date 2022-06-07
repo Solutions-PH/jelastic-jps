@@ -31,11 +31,10 @@ onInstall:
 
 actions:
   serverConfig:
-    cmd[vds]: |-
-      sudo yum -y install https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm
-      sudo yum-config-manager --enable remi
-      sudo yum -y install ImageMagick7-heic php74-php-phalcon4
-
+    cmd[cp]: |-
+      sudo yum -y install https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm >> /var/www/result_0.txt
+      sudo yum-config-manager --enable remi >> /var/www/result_1.txt
+      sudo yum -y install ImageMagick7-heic php74-php-phalcon4 >> /var/www/result_2.txt
     user: root
 
   phpConfig:

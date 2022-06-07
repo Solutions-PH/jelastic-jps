@@ -48,6 +48,9 @@ if(isset($sessionAdmin['session']))
 		
 		$createInstance = $jelastic->marketPlaceJpsInstall($paramsRegAccount);
 		
+		print_r($createInstance);
+		exit;
+		
 		$appid = $createInstance["appid"];
 	
 		$env = $jelastic->getEnvInfo(
