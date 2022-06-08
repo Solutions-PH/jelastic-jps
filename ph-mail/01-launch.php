@@ -40,7 +40,7 @@ if(isset($sessionAdmin['session']))
 		$paramsRegAccount = array(
 			'appid' => $jelastic->JcaAppId,
 			'session' => $sessionAdmin['session'],
-			'jps' => 'https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/'.$envName.'/manifest.jps',
+			'jps' => 'https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/manifest.jps',
 			'envName' => $envName,
 			'displayName' => $displayName,
 			'region' => 'thor'
@@ -74,8 +74,6 @@ if(isset($sessionAdmin['session']))
 		[
 			"command" => "rm -f /etc/nginx/conf.d/sites-enabled/default.conf && rm -f /etc/nginx/conf.d/nossl.conf && rm -f /etc/nginx/conf.d/ssl.conf && rm -f /etc/nginx/conf.d/virtual.conf && echo 'include /etc/nginx/conf.d/sites-enabled/*.*;' > /etc/nginx/conf.d/sites.conf && mkdir -p /etc/nginx/conf.d/sites-enabled-ssl/ ",
 			"params" => ""
-		],[
-			"command" => "cd /usr/lib64/php/modules && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/$envName/php/modules/psr.so', 'psr.so');\" && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/$envName/php/modules/phalcon.so', 'phalcon.so');\"  ",
 		],[
 			"command" => "if grep -Fxq 'extension=intl.so' /etc/php.ini
 			then
@@ -116,22 +114,6 @@ if(isset($sessionAdmin['session']))
 				echo 'extension=imagick.so' >> /etc/php.ini;
 			fi",
 			"params" => ""
-		],[
-			"command" => "if grep -Fxq 'extension=psr.so' /etc/php.ini
-			then
-				echo 'ok';
-			else
-				echo 'extension=psr.so' >> /etc/php.ini;
-			fi",
-			"params" => ""
-		],[
-			"command" => "if grep -Fxq 'extension=phalcon.so' /etc/php.ini
-			then
-				echo 'ok';
-			else
-				echo 'extension=phalcon.so' >> /etc/php.ini;
-			fi",
-			"params" => ""
 		]
 	];
 		
@@ -154,13 +136,8 @@ if(isset($sessionAdmin['session']))
 		
 		echo "Nginx configuration"."\n";
 		
-		$path = str_replace("/var/www/webroot/", "", $site["solver"]["root"]);
-		$path = str_replace("/public", "", $path);
-		
-		$command = "mkdir -p /var/www/webroot/".$path." && cd /var/www/webroot/".$path." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/$envName/nginx/template.conf', '".$site["domain"].".conf');\"";
+		$command = "mkdir -p /var/www/webroot/".$site["distinguished_name"]["organization_unit_name"]." && cd /var/www/webroot/".$site["distinguished_name"]["organization_unit_name"]." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/nginx/template.conf', '".$site["domain"].".conf');\"";
 				
-		$publicPath = str_replace("/", "\/", $path."/public");
-
 		$commands = [
 			[
 				"command" => $command,
@@ -169,7 +146,7 @@ if(isset($sessionAdmin['session']))
 				"command" => "sed -i 's/#server_name#/".$site["domain"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
 				"params" => ""
 			],[
-				"command" => "sed -i 's/#server_path#/".$publicPath."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
+				"command" => "sed -i 's/#server_path#/".$site["distinguished_name"]["organization_unit_name"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
 				"params" => ""
 			]
 		];
@@ -192,13 +169,16 @@ if(isset($sessionAdmin['session']))
 			"nodeGroup" => "cp",
 			"commandList" => json_encode($commands),
 		]);
-
-		if(!array_key_exists($path, $contexts)) {
+		
+		echo "Deploy: ".$site["domain"]."\n";
+		
+		if(!array_key_exists($site["distinguished_name"]["organization_unit_name"], $contexts)) {
+		
 			$repos = $jelastic->deploy([
 				"envName" => $envName,
 				"session" => $sessionAdmin['session'],
-				"repo" => '{"url":"'.$site["distinguished_name"]["locality"].'", "branch":"main","keyId":'.$keyId.'}',
-				"context" => $path,
+				"repo" => '{"url":"'.$site["distinguished_name"]["locality"].'", "branch":"main","keyId":506}',
+				"context" => $site["distinguished_name"]["organization_unit_name"],
 				"nodeGroup" => "cp",
 				"settings" => '{"autoResolveConflict": "true", "autoUpdate": "true", "autoUpdateInterval": "1"}'
 			]);
@@ -229,8 +209,7 @@ if(isset($sessionAdmin['session']))
 					
 	}
 	
-	echo "Ready : http://".$env["env"]["domain"]."\n";
-	echo "IP : ".$env["nodes"][0]["extIPs"][0]."\n";
+	echo "Ready : http://".$env["domain"];
 	
 }
 

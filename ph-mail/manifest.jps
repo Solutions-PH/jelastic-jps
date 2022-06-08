@@ -1,0 +1,39 @@
+version: '1.4.2'
+appVersion: latest
+type: install
+id: ph-mail
+name: ph-mail
+baseUrl: https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-mail
+
+logo: /images/logo-transparent.png
+homepage: http://www.ph.fr
+
+categories:
+- apps/dev-and-admin-tools
+
+description:
+  short: Open-source PHP web framework for rapid development
+
+globals:
+  root: /var/www/webroot/ROOT
+
+nodes:
+- fixedCloudlets: 3
+  flexibleCloudlets: 6
+  nodeGroup: vps
+  nodeType: ubuntu20
+  extip: true
+
+onInstall:
+  - serverConfig
+
+actions:
+  serverConfig:
+    cmd[vps]: |-
+      cd /home && wget https://github.com/iredmail/iRedMail/archive/refs/tags/1.6.0.tar.gz && tar -xvf 1.6.0.tar.gz && cd iRedMail-1.6.0 && hostnamectl set-hostname mailbox.ph.fr && wget https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-mail/iredmail/config
+
+    user: root
+
+startPage: /
+
+success: /texts/success.md
