@@ -155,8 +155,8 @@ if(isset($sessionAdmin['session']))
 		$path = str_replace("/var/www/webroot/", "", $site["solver"]["root"]);
 		$path = str_replace("/public", "", $path);
 		
-		$command = "mkdir -p ".$path." && cd ".$path." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/'.$envName.'/nginx/template.conf', '".$site["domain"].".conf');\"";
-		
+		$command = "mkdir -p /var/www/webroot/".$path." && cd /var/www/webroot/".$path." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/$envName/nginx/template.conf', '".$site["domain"].".conf');\"";
+				
 		$publicPath = str_replace("/", "\/", $path."/public");
 
 		$commands = [
@@ -192,7 +192,6 @@ if(isset($sessionAdmin['session']))
 		]);
 
 		if(!array_key_exists($path, $contexts)) {
-		echo $path;
 			$repos = $jelastic->deploy([
 				"envName" => $envName,
 				"session" => $sessionAdmin['session'],
