@@ -1,0 +1,18 @@
+contact_email: ssl@7.fr 
+
+defaults:
+  distinguished_name:
+	country: FR
+	locality: Paris
+	organization_name: 7 Medical
+  solver: http
+
+certificates:
+  - domain: mailbox.lotibox.net
+	distinguished_name:
+	  organization_name: Lotibox Mail
+	solver:
+	  name: http-file
+	  adapter: local
+	  root: /var/www/html
+ 

@@ -18,14 +18,19 @@ globals:
   root: /var/www/webroot/ROOT
 
 nodes:
-- fixedCloudlets: 3
-  flexibleCloudlets: 6
+- fixedCloudlets: 10
+  flexibleCloudlets: 20
   nodeGroup: vps
   nodeType: ubuntu20
+  env:
+    JELASTIC_PORTS: 25,587,110,995,143,993,80,443
+  isSLBAccessEnabled: false
   extip: true
 
 onInstall:
   - serverConfig
+  - restartNodes:
+    - nodeGroup: [vps]
 
 actions:
   serverConfig:
