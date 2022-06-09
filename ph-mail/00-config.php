@@ -6,4 +6,5 @@
  
 $envName = "ph-mail";
 $displayName = "ph-mail";
+$domain = "mailbox.lotibox.net";
 $keyId = 570;

@@ -64,7 +64,7 @@ if(isset($sessionAdmin['session']))
 	echo "AppId = ".$appid."\n";
 
 	echo "Execute commands"."\n";
-
+	/*
 	$commands = [
 		[
 			"command" => "cd /var/www && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/2.0.0/acmephp.phar', 'acmephp.phar');\" && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/2.0.0/acmephp.phar.pubkey', 'acmephp.phar.pubkey');\"",
@@ -80,78 +80,31 @@ if(isset($sessionAdmin['session']))
 		"nodeGroup" => "vps",
 		"commandList" => json_encode($commands),
 	]);
+	*/
+	
+	$cmd = "amavisd-new genrsa /var/lib/dkim/".$domain.".pem 1024 && chown amavis:amavis /var/lib/dkim/".$domain.".pem && chmod 0400 /var/lib/dkim/".$domain.".pem";
+
+	$commands = [
+		[
+			"command" => "rm -f /etc/ssl/certs/iRedMail.crt && chmod 777 /root/.acmephp/master/certs/".$domain."/public/fullchain.pem && cp /root/.acmephp/master/certs/".$domain."/public/fullchain.pem /etc/ssl/certs/iRedMail.crt && chmod 600 /root/.acmephp/master/certs/".$domain."/public/fullchain.pem && rm -f /etc/ssl/private/iRedMail.key && chmod 777 /root/.acmephp/master/certs/".$domain."/private/key.private.pem && cp /root/.acmephp/master/certs/".$domain."/private/key.private.pem /etc/ssl/private/iRedMail.key && chmod 600 /root/.acmephp/master/certs/".$domain."/private/key.private.pem",
+			"params" => ""
+		],[
+			"command" => $cmd,
+		]
+	];
+		
+	$cmd = $jelastic->execCmd([
+		"envName" => $envName,
+		"session" => $sessionAdmin['session'],
+		"nodeGroup" => "vps",
+		"commandList" => json_encode($commands),
+	]);
+	
 	print_r($cmd);
-	echo "ok";
-	exit;
 	
-	$sites = yaml_parse(file_get_contents('./config.yaml'));
-
-	echo "Domain configuration"."\n";
-
-	echo "---------\n";
+	echo "Ask key with "."\n";
+	echo "amavisd-new showkeys ".$domain."\n";
 	
-	foreach($sites["certificates"] as $site) {
-	
-		echo "Start : ".$site["domain"]."\n";		
-		
-		echo "Nginx configuration"."\n";
-		
-		$path = str_replace("/var/www/webroot/", "", $site["solver"]["root"]);
-		$path = str_replace("/public", "", $path);
-		
-		$command = "mkdir -p /var/www/webroot/".$path." && cd /var/www/webroot/".$path." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/$envName/nginx/template.conf', '".$site["domain"].".conf');\"";
-				
-		$publicPath = str_replace("/", "\/", $path."/public");
-
-		$commands = [
-			[
-				"command" => $command,
-				"params" => ""
-			],[
-				"command" => "sed -i 's/#server_name#/".$site["domain"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
-				"params" => ""
-			],[
-				"command" => "sed -i 's/#server_path#/".$publicPath."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
-				"params" => ""
-			]
-		];
-		
-		if(array_key_exists("subject_alternative_names", $site)) {
-			$commands[] = [
-				"command" => "sed -i 's/#server_alt_name#/".$site["subject_alternative_names"]."/g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
-				"params" => ""
-			];
-		} else {
-			$commands[] = [
-				"command" => "sed -i 's/#server_alt_name#/ /g' /etc/nginx/conf.d/sites-enabled/".$site["domain"].".conf",
-				"params" => ""
-			];
-		}
-		
-		$cmd = $jelastic->execCmd([
-			"envName" => $envName,
-			"session" => $sessionAdmin['session'],
-			"nodeGroup" => "cp",
-			"commandList" => json_encode($commands),
-		]);
-
-		if(!array_key_exists($path, $contexts)) {
-			$repos = $jelastic->deploy([
-				"envName" => $envName,
-				"session" => $sessionAdmin['session'],
-				"repo" => '{"url":"'.$site["distinguished_name"]["locality"].'", "branch":"main","keyId":'.$keyId.'}',
-				"context" => $path,
-				"nodeGroup" => "cp",
-				"settings" => '{"autoResolveConflict": "true", "autoUpdate": "true", "autoUpdateInterval": "1"}'
-			]);
-			
-		}
-		
-		echo "End : ".$site["domain"]."\n";
-		echo "---------\n";
-		
-	}
-
 	$env = $jelastic->getEnvInfo(
 		[
 			'envName' => $envName,
