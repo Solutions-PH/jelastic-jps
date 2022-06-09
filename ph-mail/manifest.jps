@@ -28,12 +28,13 @@ nodes:
   extip: true
 
 onInstall:
+  - serverInstall
   - serverConfig
   - restartNodes:
     - nodeGroup: [vps]
 
 actions:
-  serverConfig:
+  serverInstall:
     cmd[vps]: |-
       cd /home && wget https://github.com/iredmail/iRedMail/archive/refs/tags/1.6.0.tar.gz && tar -xvf 1.6.0.tar.gz && cd iRedMail-1.6.0 && hostnamectl set-hostname mailbox.ph.fr && wget https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-mail/iredmail/config &&  AUTO_USE_EXISTING_CONFIG_FILE=y \
       AUTO_INSTALL_WITHOUT_CONFIRM=y \
@@ -44,7 +45,11 @@ actions:
       bash iRedMail.sh 
 
     user: root
-
+  
+  serverConfig:
+    cmd[vps]: |-
+      systemctl disable --now clamav-daemon &&  apt remove -y clamav-base
+    
 startPage: /
 
 success: /texts/success.md

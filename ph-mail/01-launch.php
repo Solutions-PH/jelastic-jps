@@ -67,75 +67,22 @@ if(isset($sessionAdmin['session']))
 
 	$commands = [
 		[
-			"command" => "cd /var/www/webroot && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/2.0.0/acmephp.phar', 'acmephp.phar');\" && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/2.0.0/acmephp.phar.pubkey', 'acmephp.phar.pubkey');\"",
+			"command" => "cd /var/www && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/2.0.0/acmephp.phar', 'acmephp.phar');\" && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/2.0.0/acmephp.phar.pubkey', 'acmephp.phar.pubkey');\"",
 			"params" => ""
 		],[
-			"command" => "cd /var/www/webroot && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/".$envName."/config.yaml', 'config.yaml');\" && php acmephp.phar run config.yaml",
-		],[
-			"command" => "if grep -Fxq 'extension=intl.so' /etc/php.ini
-			then
-				echo 'ok';
-			else
-				echo 'extension=intl.so' >> /etc/php.ini;
-			fi",
-			"params" => ""
-		],[
-			"command" => "if grep -Fxq 'extension=gd.so' /etc/php.ini
-			then
-				echo 'ok';
-			else
-				echo 'extension=gd.so' >> /etc/php.ini;
-			fi",
-			"params" => ""
-		],[
-			"command" => "if grep -Fxq 'extension=pdo.so' /etc/php.ini
-			then
-				echo 'ok';
-			else
-				echo 'extension=pdo.so' >> /etc/php.ini;
-			fi",
-			"params" => ""
-		],[
-			"command" => "if grep -Fxq 'extension=pdo_dblib.so' /etc/php.ini
-			then
-				echo 'ok';
-			else
-				echo 'extension=pdo_dblib.so' >> /etc/php.ini;
-			fi",
-			"params" => ""
-		],[
-			"command" => "if grep -Fxq 'extension=imagick.so' /etc/php.ini
-			then
-				echo 'ok';
-			else
-				echo 'extension=imagick.so' >> /etc/php.ini;
-			fi",
-			"params" => ""
-		],[
-			"command" => "if grep -Fxq 'extension=psr.so' /etc/php.ini
-			then
-				echo 'ok';
-			else
-				echo 'extension=psr.so' >> /etc/php.ini;
-			fi",
-			"params" => ""
-		],[
-			"command" => "if grep -Fxq 'extension=phalcon.so' /etc/php.ini
-			then
-				echo 'ok';
-			else
-				echo 'extension=phalcon.so' >> /etc/php.ini;
-			fi",
-			"params" => ""
+			"command" => "cd /var/www && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/".$envName."/config.yaml', 'config.yaml');\" && php acmephp.phar run config.yaml",
 		]
 	];
 		
 	$cmd = $jelastic->execCmd([
 		"envName" => $envName,
 		"session" => $sessionAdmin['session'],
-		"nodeGroup" => "cp",
+		"nodeGroup" => "vps",
 		"commandList" => json_encode($commands),
 	]);
+	print_r($cmd);
+	echo "ok";
+	exit;
 	
 	$sites = yaml_parse(file_get_contents('./config.yaml'));
 
