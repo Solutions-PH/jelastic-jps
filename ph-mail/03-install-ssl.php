@@ -56,31 +56,6 @@ if(isset($sessionAdmin['session']))
 	]);
 
 	print_r($cmd);
-	exit;	
-	echo "Ask key with "."\n";
-	echo "amavisd-new showkeys ".$domain."\n";
-	
-	$env = $jelastic->getEnvInfo(
-		[
-			'envName' => $envName,
-			'session' => $sessionAdmin['session']
-		]
-	);
-
-	echo "Restart : ".$envName."\n";
-	
-	foreach($env["nodes"] as $node) {
-		
-		$cmd = $jelastic->restart([
-			"envName" => $envName,
-			"nodeId" => $node["id"],
-			"session" => $sessionAdmin['session']
-		]);
-					
-	}
-	
-	echo "Ready : http://".$env["env"]["domain"]."\n";
-	echo "IP : ".$env["nodes"][0]["extIPs"][0]."\n";
 	
 }
 
