@@ -37,14 +37,20 @@ if(isset($sessionAdmin['session']))
 	
 	echo "AppId = ".$appid."\n";
 
-	$cmd = "amavisd-new genrsa /var/lib/dkim/".$domain.".pem 1024 && chown amavis:amavis /var/lib/dkim/".$domain.".pem && chmod 0400 /var/lib/dkim/".$domain.".pem";
-
 	$commands = [
-		[
-			"command" => "rm -f /etc/ssl/certs/iRedMail.crt && chmod 777 /root/.acmephp/master/certs/".$domain."/public/fullchain.pem && cp /root/.acmephp/master/certs/".$domain."/public/fullchain.pem /etc/ssl/certs/iRedMail.crt && chmod 600 /root/.acmephp/master/certs/".$domain."/public/fullchain.pem && rm -f /etc/ssl/private/iRedMail.key && chmod 777 /root/.acmephp/master/certs/".$domain."/private/key.private.pem && cp /root/.acmephp/master/certs/".$domain."/private/key.private.pem /etc/ssl/private/iRedMail.key && chmod 600 /root/.acmephp/master/certs/".$domain."/private/key.private.pem",
+		/*[
+			"command" => "mysql -u root -pmyPassword -e \"USE vmail; INSERT INTO alias (address, domain, active) VALUES ('oct@lotibox.net', 'lotibox.net', 1); INSERT INTO forwardings (address, forwarding, domain, dest_domain, is_forwarding, active) VALUES ('oct@lotibox.net', 'oct@localhost', 'lotibox.net', 'localhost', 1, 1);\"",
+			"params" => ""
+		],*/[
+			"command" => "if grep -Fxq 'oct' /etc/postfix/aliases;
+			then
+				echo 'ok';
+			else
+				echo 'oct: \"|/home/oct/script.php\"' >>  /etc/postfix/aliases;  
+			fi",
 			"params" => ""
 		],[
-			"command" => "",
+			"command" => "mkdir -f /home/oct && cd /home/oct && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/".$envName."/script.php', 'script.php');\"",
 		]
 	];
 	
