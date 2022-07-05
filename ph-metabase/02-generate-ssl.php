@@ -36,11 +36,11 @@ if(isset($sessionAdmin['session']))
 	if($env["result"]==0) {
 		$appid = $env["env"]["appid"];		
 					
-		$command = "cd /var/www/webroot && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-metabase/config.yaml', 'config.yaml');\" && php acmephp.phar run config.yaml";
+		$command = "cd /var/www && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-metabase/config.yaml', 'config.yaml');\" && php acmephp.phar run config.yaml";
 				
 		$commands = [
 			[
-				"command" => "cd /var/www/webroot && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/2.0.0/acmephp.phar', 'acmephp.phar');\" && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/2.0.0/acmephp.phar.pubkey', 'acmephp.phar.pubkey');\"",
+				"command" => "cd /var/www && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/2.0.0/acmephp.phar', 'acmephp.phar');\" && php -r \"copy('https://github.com/acmephp/acmephp/releases/download/2.0.0/acmephp.phar.pubkey', 'acmephp.phar.pubkey');\"",
 				"params" => ""
 			],
 			[
@@ -52,7 +52,7 @@ if(isset($sessionAdmin['session']))
 		$cmd = $jelastic->execCmd([
 			"envName" => $envName,
 			"session" => $sessionAdmin['session'],
-			"nodeGroup" => "cp",
+			"nodeGroup" => "vps",
 			"commandList" => json_encode($commands),
 		]);
 		

@@ -71,4 +71,4 @@ systemctl start metabase.service
 
 systemctl enable metabase.service
 
-cd /etc/nginx/sites-enabled/default && rm default && wget https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-metabase/nginx/default.conf
+cd /etc/nginx/sites-enabled && rm default && wget https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-metabase/nginx/default.conf && service nginx restart
