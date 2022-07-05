@@ -22,7 +22,7 @@ nodes:
 - fixedCloudlets: 3
   flexibleCloudlets: 6
   nodeGroup: vps
-  nodeType: ubuntu20
+  nodeType: debian11
   env:
     JELASTIC_PORTS: 80,443,3000
   isSLBAccessEnabled: false

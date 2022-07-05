@@ -13,7 +13,7 @@ echo -n "Enter your version of metabase that is needed See https://github.com/me
 echo "selected version will be $MB_VERSION"
 
 apt-get update -qy
-apt-get install curl openjdk-11-jdk -qy
+apt-get install curl nginx openjdk-11-jdk -qy
 
 mkdir $MB_PATH
 
@@ -36,6 +36,13 @@ After=syslog.target
 After=network.target
 
 [Service]
+
+Environment=MB_DB_TYPE=mysql
+Environment=MB_DB_DBNAME=metabase
+Environment=MB_DB_PORT=3306
+Environment=MB_DB_USER=jelastic-7095521
+Environment=MB_DB_PASS=f41FzKmSOTdZMNkCjdU2
+Environment=MB_DB_HOST=10.100.7.16
 WorkingDirectory=$MB_PATH
 ExecStart=/usr/bin/java -jar $MB_PATH/metabase.jar
 EnvironmentFile=/etc/default/metabase
@@ -63,3 +70,5 @@ systemctl daemon-reload
 systemctl start metabase.service
 
 systemctl enable metabase.service
+
+cd /etc/nginx/sites-enabled/default && rm default && wget https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-metabase/nginx/default.conf

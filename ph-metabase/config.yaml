@@ -8,21 +8,11 @@ defaults:
   solver: http
 
 certificates:
-  - domain: test.ph.fr
+  - domain: bi.7.fr
     distinguished_name:
-      organization_name: Test PH
-      organization_unit_name: test-ph-fr
-      locality: 'https://github.com/Solutions-PH/rest-api'
+      organization_name: BI 7.fr
+      organization_unit_name: bi-7-fr
     solver:
       name: http-file
       adapter: local
-      root: /var/www/webroot/test-ph-fr
-  - domain: test2.ph.fr
-    distinguished_name:
-      organization_name: Test PH
-      organization_unit_name: test2-ph-fr
-      locality: 'https://github.com/Solutions-PH/web-app'
-    solver:
-      name: http-file
-      adapter: local
-      root: /var/www/webroot/test2-ph-fr
+      root: /var/www/webroot/bi-7-fr
