@@ -15,4 +15,4 @@ certificates:
     solver:
       name: http-file
       adapter: local
-      root: /var/www/webroot/bi-7-fr
+      root: /var/www/bi-7-fr
