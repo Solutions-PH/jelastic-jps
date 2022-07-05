@@ -13,7 +13,7 @@ echo -n "Enter your version of metabase that is needed See https://github.com/me
 echo "selected version will be $MB_VERSION"
 
 apt-get update -qy
-apt-get install curl nginx openjdk-11-jdk -qy
+apt-get install curl nginx php-cli openjdk-11-jdk -qy
 
 mkdir $MB_PATH
 
