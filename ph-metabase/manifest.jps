@@ -24,7 +24,7 @@ nodes:
   nodeGroup: vps
   nodeType: ubuntu20
   env:
-    JELASTIC_PORTS: 80,443
+    JELASTIC_PORTS: 80,443,3000
   isSLBAccessEnabled: false
   extip: true
 
@@ -38,14 +38,11 @@ actions:
   serverConfig:
     cmd[vps]: |-
       sudo apt -y update
-      sudo apt install -y default-jdk
     user: root
 
   metabaseConfig:
     cmd[vps]: |-
-      wget http://downloads.metabase.com/v0.43.4/metabase.jar && sudo mkdir -p /apps/java && sudo cp metabase.jar /apps/java
-      sudo groupadd -r appmgr && sudo useradd -r -s /bin/false -g appmgr appmgr && sudo chown -R appmgr:appmgr /apps/java
-      sudo cd /etc/systemd/system/ && wget https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-metabase/service/metabase.service
+      wget https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-metabase/scripts/install.sh && sudo bash install.sh
     user: root
 
 startPage: /

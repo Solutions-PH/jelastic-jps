@@ -40,7 +40,7 @@ if(isset($sessionAdmin['session']))
 		$paramsRegAccount = array(
 			'appid' => $jelastic->JcaAppId,
 			'session' => $sessionAdmin['session'],
-			'jps' => 'https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/manifest.jps',
+			'jps' => 'https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-metabase/manifest.jps',
 			'envName' => $envName,
 			'displayName' => $displayName,
 			'region' => 'thor'
@@ -67,8 +67,10 @@ if(isset($sessionAdmin['session']))
 	foreach($env["env"]["contexts"] as $context) {
 		$contexts[$context["context"]] = $context["archivename"];
 	}
-
+	
 	echo "Execute commands"."\n";
+	
+	/*
 
 	$commands = [
 		[
@@ -210,6 +212,8 @@ if(isset($sessionAdmin['session']))
 	}
 	
 	echo "Ready : http://".$env["domain"];
+	
+	*/
 	
 }
 
