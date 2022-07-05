@@ -1,0 +1,14 @@
+[Unit]
+Description=Metabase applicaion service
+Documentation=https://www.metabase.com/docs/latest
+
+[Service]
+WorkingDirectory=/apps/java
+ExecStart=/usr/bin/java -Xms128m -Xmx256m -jar metabase.jar
+User=appmgr
+Type=simple
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
