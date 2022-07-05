@@ -1,12 +1,12 @@
 #!/bin/bash
 
 MB_PATH_DEFAULT="/opt/metabase"
-MB_VERSION_DEFAULT="v0.35.0"
+MB_VERSION_DEFAULT="v0.43.4"
 
 echo "Hello, "$USER".  This script will Configure. Install & run metabase on port localhost:3000"
 echo -n "Enter your directory to install metabase e.g,.. '/opt/metabase' and press [ENTER] : "
-read $MB_PATH\n
-MB_PATH="${MB_PATH:-$MB_PATH_DEFAULT}"
+
+MB_PATH="/opt/metabase"
 echo "selected directory will be $MB_PATH"
 
 echo -n "Enter your version of metabase that is needed See https://github.com/metabase/metabase/releases  e.g,.. 'v0.35.0' and press [ENTER]: "
