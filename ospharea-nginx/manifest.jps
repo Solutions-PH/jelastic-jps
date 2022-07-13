@@ -1,0 +1,47 @@
+version: '1.4.2'
+appVersion: latest
+type: install
+id: ospharea-nginx
+name: Ospharea Nginx
+baseUrl: https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ospharea-nginx
+
+homepage: http://www.ph.fr/
+
+categories:
+- apps/dev-and-admin-tools
+
+description:
+  short: Open-source PHP web framework for rapid development
+
+globals:
+  root: /var/www/webroot/ROOT
+
+nodes:
+- fixedCloudlets: 3
+  flexibleCloudlets: 6
+  nodeType: nginxphp
+  engine: php7.4
+  extip: true
+
+onInstall:
+  - serverConfig
+  - phpConfig
+  - restartNodes:
+    - nodeGroup: [cp]
+
+actions:
+  serverConfig:
+    cmd[cp]: |-
+      sudo yum -y install https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm >> /var/www/result_0.txt
+      sudo yum-config-manager --enable remi >> /var/www/result_1.txt
+      sudo yum -y install ImageMagick7-heic php74-php-phalcon4 php74-php-pecl-psr >> /var/www/result_2.txt
+    user: root
+
+  phpConfig:
+    cmd[cp]: |-
+      curl -sS https://getcomposer.org/installer | php
+      mv composer.phar /usr/bin/composer
+      chmod +x /usr/bin/composer
+    user: root
+
+startPage: /
