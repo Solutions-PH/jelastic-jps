@@ -1,0 +1,26 @@
+contact_email: ssl@7.fr 
+
+defaults:
+  distinguished_name:
+    country: FR
+    locality: Paris
+    organization_name: 7 Medical
+  solver: http
+
+certificates:
+  - domain: ocean.ospharm.org
+    distinguished_name:
+      organization_name: Ospharm Ocean
+      locality: 'github.com:ospharea/api-keabot.git'
+    solver:
+      name: http-file
+      adapter: local
+      root: /var/www/webroot/ocean-ospharm-org/public
+  - domain: terre.ospharm.org
+    distinguished_name:
+      organization_name: Ospharm Terre
+      locality: 'github.com:ospharea/api-informax.git'
+    solver:
+      name: http-file
+      adapter: local
+      root: /var/www/webroot/terre-ospharm-org/public
