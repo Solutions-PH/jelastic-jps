@@ -1,0 +1,7 @@
+- site: forum-ospharea-org
+  domain: forum.ospharea.org
+  repo: 
+    name: 'forum-ospharea-org'
+    url: 'https://github.com/ospharea/forum'
+    branch: 'main'
+
