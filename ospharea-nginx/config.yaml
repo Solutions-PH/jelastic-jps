@@ -8,19 +8,11 @@ defaults:
   solver: http
 
 certificates:
-  - domain: ocean.ospharm.org
+  - domain: forum.ospharm.org
     distinguished_name:
-      organization_name: Ospharm Ocean
-      locality: 'github.com:ospharea/api-keabot.git'
+      organization_name: Forum Ospharm
+      locality: 'github.com:ospharea/forum.git'
     solver:
       name: http-file
       adapter: local
-      root: /var/www/webroot/ocean-ospharm-org/public
-  - domain: terre.ospharm.org
-    distinguished_name:
-      organization_name: Ospharm Terre
-      locality: 'github.com:ospharea/api-informax.git'
-    solver:
-      name: http-file
-      adapter: local
-      root: /var/www/webroot/terre-ospharm-org/public
+      root: /var/www/webroot/forum-ospharm-org/public
