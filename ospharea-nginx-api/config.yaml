@@ -31,4 +31,4 @@ certificates:
     solver:
       name: http-file
       adapter: local
-      root: /var/www/webroot/api-dev-ospharm-org/public
+      root: /var/www/webroot/dev-api-ospharm-org/public
