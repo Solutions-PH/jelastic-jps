@@ -24,11 +24,11 @@ certificates:
       name: http-file
       adapter: local
       root: /var/www/webroot/terre-ospharm-org/public
-  - domain: dev.api.ospharm.org
+  - domain: api.dev.ospharm.org
     distinguished_name:
       organization_name: Ospharm API Ubiquity
       locality: 'github.com:ospharea/api-ubiquity.git'
     solver:
       name: http-file
       adapter: local
-      root: /var/www/webroot/dev-api-ospharm-org/public
+      root: /var/www/webroot/api-dev-ospharm-org/public
