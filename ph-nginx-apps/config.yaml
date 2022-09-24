@@ -8,20 +8,20 @@ defaults:
   solver: http
 
 certificates:
-  - domain: test.ph.fr
+  - domain: api.ph.fr
     distinguished_name:
       organization_name: Test PH
       organization_unit_name: test-ph-fr
-      locality: 'https://github.com/Solutions-PH/rest-api'
+      locality: 'https://github.com/Solutions-PH/api'
     solver:
       name: http-file
       adapter: local
-      root: /var/www/webroot/test-ph-fr
-  - domain: test2.ph.fr
+      root: /var/www/webroot/api-ph-fr
+  - domain: www.looksante.fr
     distinguished_name:
       organization_name: Test PH
       organization_unit_name: test2-ph-fr
-      locality: 'https://github.com/Solutions-PH/web-app'
+      locality: 'https://github.com/Solutions-PH/looksante'
     solver:
       name: http-file
       adapter: local
