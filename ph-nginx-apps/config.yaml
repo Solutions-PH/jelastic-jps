@@ -11,7 +11,7 @@ certificates:
   - domain: api.ph.fr
     distinguished_name:
       organization_name: Test PH
-      organization_unit_name: test-ph-fr
+      organization_unit_name: api-ph-fr
       locality: 'https://github.com/Solutions-PH/api'
     solver:
       name: http-file
@@ -19,10 +19,10 @@ certificates:
       root: /var/www/webroot/api-ph-fr
   - domain: www.looksante.fr
     distinguished_name:
-      organization_name: Test PH
-      organization_unit_name: test2-ph-fr
+      organization_name: Looksante
+      organization_unit_name: www-looksante-fr
       locality: 'https://github.com/Solutions-PH/looksante'
     solver:
       name: http-file
       adapter: local
-      root: /var/www/webroot/test2-ph-fr
+      root: /var/www/webroot/www-looksante-fr
