@@ -12,16 +12,25 @@ certificates:
     distinguished_name:
       organization_name: Test PH
       organization_unit_name: api-ph-fr
-      locality: 'https://github.com/Solutions-PH/api'
+      locality: 'github.com:Solutions-PH/api.git'
     solver:
       name: http-file
       adapter: local
       root: /var/www/webroot/api-ph-fr
+  - domain: expert.ph.fr
+    distinguished_name:
+      organization_name: Plateforme Expert Opsharm
+      organization_unit_name: expert-ph-fr
+      locality: 'github.com:Ospharea/expert.git'
+    solver:
+      name: http-file
+      adapter: local
+      root: /var/www/webroot/expert-ph-fr
   - domain: www.looksante.fr
     distinguished_name:
       organization_name: Looksante
       organization_unit_name: www-looksante-fr
-      locality: 'https://github.com/Solutions-PH/looksante'
+      locality: 'github.com:Solutions-PH/looksante.git'
     solver:
       name: http-file
       adapter: local

@@ -171,13 +171,13 @@ if(isset($sessionAdmin['session']))
 		]);
 		
 		echo "Deploy: ".$site["domain"]."\n";
-		
+
 		if(!array_key_exists($site["distinguished_name"]["organization_unit_name"], $contexts)) {
 		
 			$repos = $jelastic->deploy([
 				"envName" => $envName,
 				"session" => $sessionAdmin['session'],
-				"repo" => '{"url":"'.$site["distinguished_name"]["locality"].'", "branch":"main","keyId":506}',
+				"repo" => '{"url":"'.$site["distinguished_name"]["locality"].'", "branch":"main","keyId":596}',
 				"context" => $site["distinguished_name"]["organization_unit_name"],
 				"nodeGroup" => "cp",
 				"settings" => '{"autoResolveConflict": "true", "autoUpdate": "true", "autoUpdateInterval": "1"}'
@@ -209,7 +209,7 @@ if(isset($sessionAdmin['session']))
 					
 	}
 	
-	echo "Ready : http://".$env["domain"];
+	echo "Ready : http://".$env["env"]["domain"];
 	
 }
 

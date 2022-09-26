@@ -1,0 +1,25 @@
+contact_email: ssl@7.fr 
+
+defaults:
+  distinguished_name:
+    country: FR
+    locality: Paris
+    organization_name: 7 Medical
+  solver: http
+
+certificates:
+  - domain: normandiepharma.fr
+    subject_alternative_names:
+      - '*.normandiepharma.fr'
+    distinguished_name:
+      organization_name: Normandie Pharma
+    solver:
+      name: dns
+  - domain: bretagnepharma.fr
+    subject_alternative_names:
+      - '*.bretagnepharma.fr'
+    distinguished_name:
+      organization_name: Bretagne Pharma
+    solver:
+      name: dns
+  
