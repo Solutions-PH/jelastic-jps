@@ -17,6 +17,15 @@ certificates:
       name: http-file
       adapter: local
       root: /var/www/webroot/api-ph-fr
+  - domain: lrs.ph.fr
+    distinguished_name:
+      organization_name: LRS PH
+      organization_unit_name: lrs-ph-fr
+      locality: 'github.com:Solutions-PH/lrs.git'
+    solver:
+      name: http-file
+      adapter: local
+      root: /var/www/webroot/lrs-ph-fr      
   - domain: expert.ph.fr
     distinguished_name:
       organization_name: Plateforme Expert Opsharm

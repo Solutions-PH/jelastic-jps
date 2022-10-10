@@ -48,7 +48,7 @@ if(isset($sessionAdmin['session']))
 			
 			echo "Nginx configuration"."\n";
 			
-			$command = "cd /etc/nginx/conf.d/sites-enabled-ssl && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/nginx/template.ssl.conf', '".$site["domain"].".conf');\"";
+			$command = "cd /etc/nginx/conf.d/sites-enabled-ssl && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-api/nginx/template.ssl.conf', '".$site["domain"].".conf');\"";
 					
 			$commands = [
 				[
