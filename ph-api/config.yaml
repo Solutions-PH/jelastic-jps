@@ -35,6 +35,15 @@ certificates:
       name: http-file
       adapter: local
       root: /var/www/webroot/expert-ph-fr
+  - domain: sentinel.ph.fr
+    distinguished_name:
+      organization_name: Plateforme Sentinel ID
+      organization_unit_name: sentinel-ph-fr
+      locality: 'github.com:Solutions-PH/sentinel.git'
+    solver:
+      name: http-file
+      adapter: local
+      root: /var/www/webroot/sentinel-ph-fr
   - domain: www.looksante.fr
     distinguished_name:
       organization_name: Looksante

@@ -136,7 +136,7 @@ if(isset($sessionAdmin['session']))
 		
 		echo "Nginx configuration"."\n";
 		
-		$command = "mkdir -p /var/www/webroot/".$site["distinguished_name"]["organization_unit_name"]." && cd /var/www/webroot/".$site["distinguished_name"]["organization_unit_name"]." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-nginx-apps/nginx/template.conf', '".$site["domain"].".conf');\"";
+		$command = "mkdir -p /var/www/webroot/".$site["distinguished_name"]["organization_unit_name"]." && cd /var/www/webroot/".$site["distinguished_name"]["organization_unit_name"]." && cd /etc/nginx/conf.d/sites-enabled/ && php -r \"copy('https://raw.githubusercontent.com/Solutions-PH/jelastic-jps/main/ph-api/nginx/template.conf', '".$site["domain"].".conf');\"";
 				
 		$commands = [
 			[
